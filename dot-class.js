@@ -3,7 +3,7 @@ class Dot {
         this.x = x;
         this.y = y;
         this.size = size;
-        this.name = dotArray.length + 1;
+        this.name = dotArray.length;
 
         this.clicked = false;
         this.dropX;
@@ -23,6 +23,21 @@ class Dot {
         ctx.fill();
     }
 
+    //draw the lines silly
+    drawLines(){
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+
+        //find length, and name, if this the last one, it goes back to the first one.
+        if(this.name === dotArray.length - 1){
+            console.log('we are in');
+            ctx.lineTo(dotArray[0].x, dotArray[0].y);
+        }else(ctx.lineTo(dotArray[this.name +1].x, dotArray[this.name +1].y ));
+
+        ctx.strokeStyle = "#FFFF";
+        ctx.stroke();
+    }
+
     //to see if you clicked within the dot.
     //clickCheck is the same as touchCheck, but touchCheck is much narrower. < to help it to know when to stop hunting.
     clickCheck(mouseX, mouseY){
@@ -39,7 +54,7 @@ class Dot {
 
     //targetX, targetY
     hunt(x, y){
-
+ 
         var touching = false;
 
         //dropXY (class global) is the pos of the mouse when clicked becomes false. if() its not clicked, just use the last pos of dropXY.
@@ -63,6 +78,7 @@ class Dot {
         //maintain all of the other dots in their place.
         for (let i = 0; i < dotArray.length; i++) {
             dotArray[i].drawDot();
+            if(drawLinesToggle) dotArray[i].drawLines();
         }
 
         //touch check - check each frame if he is touching the mouse.
@@ -80,6 +96,8 @@ class Dot {
         }else{ 
             this.clicked = true;
             console.log(`this name: ${this.name}`);
+            console.log(dotArray.length);
+
         }
     }
 }

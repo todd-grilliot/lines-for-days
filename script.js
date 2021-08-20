@@ -5,6 +5,7 @@ const ctx = canvas.getContext('2d');
     var isPressed = false;
     var lastPos;
     var dotArray = [];
+    var drawLinesToggle = false;
 //globals
 
 console.log('welcome to my mommas house');
@@ -57,10 +58,25 @@ canvas.addEventListener('mousemove', function(listener){
     lastPos = {x: listener.offsetX, y: listener.offsetY} 
 })
 
+function drawButton(){
+        if(drawLinesToggle)drawLinesToggle = false; 
+        else{
+            drawLinesToggle = true;
+            for(i=0; i < dotArray.length; i++) dotArray[i].drawLines();
+        } 
+        console.log('drawLinesToggle is now: ' + drawLinesToggle);
+}
+
+
+
+
+
+
+
+
 //debug button
 document.addEventListener('keypress', function (listener) {
     if(listener.key === 'q') {
         console.log('debugging...');
     }
 })
-
