@@ -47,6 +47,9 @@ class Dot {
         if(this.name === dotArray.length - 1){console.log('this is the last dot'); next = dotArray[0];}
         else next = dotArray[this.name + 1];
         if(this.name === 0){console.log('this is the first dot'); prev = dotArray[dotArray.length - 1];}
+        else prev = dotArray[this.name - 1];
+        // 9/22 where i left off. 
+        // make this do something funky
 
     }
 
