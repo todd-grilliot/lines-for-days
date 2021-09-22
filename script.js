@@ -59,7 +59,10 @@ canvas.addEventListener('mousemove', function(listener){
 })
 
 function drawButton(){
-        if(drawLinesToggle)drawLinesToggle = false; 
+        if(drawLinesToggle){
+            drawLinesToggle = false;
+            refresh();
+        } 
         else{
             drawLinesToggle = true;
             for(i=0; i < dotArray.length; i++) dotArray[i].drawLines();
@@ -67,8 +70,45 @@ function drawButton(){
         console.log('drawLinesToggle is now: ' + drawLinesToggle);
 }
 
+function addButton(){
+    var maxSize = 35;
+    var minSize = 10;
+    var tolerance = 100;
+    var randX = Math.floor(Math.random()*1400);
+    var randY = Math.floor(Math.random()*700);
+    var randSize = Math.floor(Math.random()*(maxSize - minSize) + minSize);
 
+    //check to see if it's too close to another dot.
+    for( i=0; i < dotArray.length; i++){
+        if (dotArray[i].x > randX - tolerance && dotArray[i].x < randX + tolerance && dotArray[i].y > randY - tolerance && dotArray[i].y < randY + tolerance){
+            console.log(`rand xy too close at: ${randX}, ${randY} resetting...`);
+            console.log(`too close to Dot${dotArray[i].name} at ${dotArray[i].x}, ${dotArray[i].y}`);
+            addButton();
+            return;
+        }
+    }
 
+    console.log(`new rand dot: ${randX}, ${randY}, size: ${randSize}`);
+    new Dot(randX, randY, randSize);
+    //dotArray[dotArray.length-1].drawDot();
+    refresh();
+}
+
+function deleteButton(){
+    //remove the last one from the array and make it null.
+    console.log('this is the delete button');
+    dotArray.pop();
+    refresh();
+}
+
+function refresh(){
+    console.log('refresh...')
+    ctx.clearRect(0,0, canvas.offsetWidth, canvas.offsetHeight);
+    for (let i = 0; i < dotArray.length; i++) {
+        dotArray[i].drawDot();
+        if(drawLinesToggle) dotArray[i].drawLines();
+    }
+}
 
 
 
@@ -80,3 +120,9 @@ document.addEventListener('keypress', function (listener) {
         console.log('debugging...');
     }
 })
+
+//make a color palete selector!!! and then as things are being created they are assigned random colors! from the palete array of color!
+// you could even make it so each time that you refresh the colors are randomized again within the palete!!
+// and then you just gotta get it so they are drawing lines on lines. and have an option for that.
+
+// make a number selector! so they can set numbers for rand x y and size!

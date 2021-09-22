@@ -28,13 +28,13 @@ class Dot {
         ctx.beginPath();
         ctx.moveTo(this.x, this.y);
 
-        //find length, and name, if this the last one, it goes back to the first one.
-        if(this.name === dotArray.length - 1){
-            console.log('we are in');
-            ctx.lineTo(dotArray[0].x, dotArray[0].y);
-        }else(ctx.lineTo(dotArray[this.name +1].x, dotArray[this.name +1].y ));
+        //deciding who this dot draws his line to. If this is the last dot in the array, he draws back to the first one.
+        if(this.name === dotArray.length - 1)ctx.lineTo(dotArray[0].x, dotArray[0].y);
+        else(ctx.lineTo(dotArray[this.name +1].x, dotArray[this.name +1].y ));
 
-        ctx.strokeStyle = "#FFFF";
+        //ctx.strokeStyle = "#FFFF";
+        ctx.strokeStyle = "#FFFF00";
+        ctx.lineWidth = 3;
         ctx.stroke();
     }
 
@@ -96,8 +96,6 @@ class Dot {
         }else{ 
             this.clicked = true;
             console.log(`this name: ${this.name}`);
-            console.log(dotArray.length);
-
         }
     }
 }
