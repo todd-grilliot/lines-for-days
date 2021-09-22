@@ -3,6 +3,7 @@ class Dot {
         this.x = x;
         this.y = y;
         this.size = size;
+        this.color = baseDotColor;
         this.name = dotArray.length;
 
         this.clicked = false;
@@ -11,15 +12,10 @@ class Dot {
         dotArray.push(this);
     }
 
-// /*
-//     delete(){
-//         this = null;
-//       }
-//    */ 
-
       drawDot(){
         ctx.beginPath();
         ctx.arc(this.x,this.y,this.size,0*Math.PI,2*Math.PI);
+        ctx.fillStyle = this.color;
         ctx.fill();
     }
 
@@ -36,6 +32,22 @@ class Dot {
         ctx.strokeStyle = "#FFFF00";
         ctx.lineWidth = 3;
         ctx.stroke();
+    }
+
+    //draw a parabola.
+    // each dot needs to interact with its neighbors, in the same way as drawLines()... 
+    // the dots need to decide if they are a point or an apex... 
+    //or, we could just have one dot be the apex and he does all the drawing, to his neighbors.
+    // can we select a dot???
+    drawParabola(){
+        console.log(`this is dot ${this.name} and he is so excited to draw a parabola!`);
+        // define neighbors
+        var next;
+        var prev;
+        if(this.name === dotArray.length - 1){console.log('this is the last dot'); next = dotArray[0];}
+        else next = dotArray[this.name + 1];
+        if(this.name === 0){console.log('this is the first dot'); prev = dotArray[dotArray.length - 1];}
+
     }
 
     //to see if you clicked within the dot.
@@ -66,8 +78,8 @@ class Dot {
         //setting the speed that it should move for the next frame.
         var offsetX = this.x - x;
         var offsetY = this.y - y;
-        this.x = this.x - offsetX/5;
-        this.y = this.y - offsetY/5;
+        this.x = this.x - offsetX/15;
+        this.y = this.y - offsetY/15;
 
         ctx.clearRect(0,0, canvas.offsetWidth, canvas.offsetHeight);
         ctx.beginPath();
@@ -90,12 +102,18 @@ class Dot {
         if(this.clicked || !touching) requestAnimationFrame(this.hunt.bind(this, this.dropX, this.dropY));
     }
 
+    //toggles between true and false for the value "clicked"
     toggleClicked(){
         if(this.clicked){
             this.clicked = false;
         }else{ 
             this.clicked = true;
-            console.log(`this name: ${this.name}`);
+            dotSelected = this.name;
+
+            //reset all colors.
+            resetColors();
+            this.color = selectedDotColor;
+            console.log(`selected: ${dotSelected}`);
         }
     }
 }

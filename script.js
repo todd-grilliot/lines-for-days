@@ -5,9 +5,13 @@ const ctx = canvas.getContext('2d');
     var isPressed = false;
     var lastPos;
     var dotArray = [];
+    var dotSelected = -1;
     var drawLinesToggle = false;
 //globals
-
+//Style
+    var baseDotColor = "#000000"; //black
+    var selectedDotColor = "#2a316b"
+//Style
 console.log('welcome to my mommas house');
 
 var Dot1 = new Dot(50,60,10);
@@ -58,18 +62,7 @@ canvas.addEventListener('mousemove', function(listener){
     lastPos = {x: listener.offsetX, y: listener.offsetY} 
 })
 
-function drawButton(){
-        if(drawLinesToggle){
-            drawLinesToggle = false;
-            refresh();
-        } 
-        else{
-            drawLinesToggle = true;
-            for(i=0; i < dotArray.length; i++) dotArray[i].drawLines();
-        } 
-        console.log('drawLinesToggle is now: ' + drawLinesToggle);
-}
-
+//************************************ a bunch a buttons */
 function addButton(){
     var maxSize = 35;
     var minSize = 10;
@@ -87,7 +80,6 @@ function addButton(){
             return;
         }
     }
-
     console.log(`new rand dot: ${randX}, ${randY}, size: ${randSize}`);
     new Dot(randX, randY, randSize);
     //dotArray[dotArray.length-1].drawDot();
@@ -101,6 +93,27 @@ function deleteButton(){
     refresh();
 }
 
+function drawButton(){
+    if(drawLinesToggle){
+        drawLinesToggle = false;
+        refresh();
+    } 
+    else{
+        drawLinesToggle = true;
+        for(i=0; i < dotArray.length; i++) dotArray[i].drawLines();
+    } 
+    console.log('drawLinesToggle is now: ' + drawLinesToggle);
+}
+
+/// UNDER CONSTRUCTION
+function parabolaButton(){
+    if(dotSelected >= 0){
+        dotArray[dotSelected].drawParabola();}
+    else{console.error('you need to select a dot'); return;}
+}
+//************************************ END a bunch a buttons */
+
+//refresh function
 function refresh(){
     console.log('refresh...')
     ctx.clearRect(0,0, canvas.offsetWidth, canvas.offsetHeight);
@@ -109,15 +122,20 @@ function refresh(){
         if(drawLinesToggle) dotArray[i].drawLines();
     }
 }
+//^^^ might have problems with color? we'll have to see i guess
 
-
-
+function resetColors(){
+    for (let i = 0; i < dotArray.length; i++) {
+        dotArray[i].color = baseDotColor; 
+    }
+}
 
 
 //debug button
 document.addEventListener('keypress', function (listener) {
     if(listener.key === 'q') {
         console.log('debugging...');
+        console.log(dotSelected);
     }
 })
 
