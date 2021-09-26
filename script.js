@@ -7,6 +7,7 @@ const ctx = canvas.getContext('2d');
     var dotArray = [];
     var dotSelected = -1;
     var drawLinesToggle = false;
+    var parabolaInt = 100;
 //globals
 //Style
     var baseDotColor = "#000000"; //black
@@ -107,9 +108,13 @@ function drawButton(){
 
 /// UNDER CONSTRUCTION
 function parabolaButton(){
+    //if a dot is actually selected. null didn't work cuz zero is null i guess.
     if(dotSelected >= 0){
-        dotArray[dotSelected].drawParabola();}
-    else{console.error('you need to select a dot'); return;}
+        if(dotArray[dotSelected].parabolaToggle === false){
+            dotArray[dotSelected].parabolaToggle = true;
+            dotArray[dotSelected].drawParabola();}
+    }
+    else{console.error('either no dot is selected, or selected dot is already drawing a parabola.'); return;}
 }
 //************************************ END a bunch a buttons */
 
@@ -135,7 +140,9 @@ function resetColors(){
 document.addEventListener('keypress', function (listener) {
     if(listener.key === 'q') {
         console.log('debugging...');
-        console.log(dotSelected);
+        console.log(`dot selected: ${dotSelected}`);
+        console.log(`para status... ${dotArray[dotSelected].parabolaToggle}`)
+
     }
 })
 
@@ -144,3 +151,7 @@ document.addEventListener('keypress', function (listener) {
 // and then you just gotta get it so they are drawing lines on lines. and have an option for that.
 
 // make a number selector! so they can set numbers for rand x y and size!
+
+//9-25 just got the parabolas working! The selection system is a bit messy rn. it doesn't stay selected very easily. I think smaller dots might be funner.
+// also what if every other line was a different color? or something. might be fun to play with color palletes.
+// get the reset button to work, sort of as a refresh? without refreshing the page? controls are the main thing you'd want to work on rn i think.

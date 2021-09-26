@@ -7,6 +7,7 @@ class Dot {
         this.name = dotArray.length;
 
         this.clicked = false;
+        this.parabolaToggle = false;
         this.dropX;
         this.dropY;
         dotArray.push(this);
@@ -35,21 +36,27 @@ class Dot {
     }
 
     //draw a parabola.
-    // each dot needs to interact with its neighbors, in the same way as drawLines()... 
-    // the dots need to decide if they are a point or an apex... 
-    //or, we could just have one dot be the apex and he does all the drawing, to his neighbors.
-    // can we select a dot???
     drawParabola(){
-        console.log(`this is dot ${this.name} and he is so excited to draw a parabola!`);
-        // define neighbors
+        //define neighbors
         var next;
         var prev;
+
         if(this.name === dotArray.length - 1){console.log('this is the last dot'); next = dotArray[0];}
         else next = dotArray[this.name + 1];
         if(this.name === 0){console.log('this is the first dot'); prev = dotArray[dotArray.length - 1];}
         else prev = dotArray[this.name - 1];
-        // 9/22 where i left off. 
-        // make this do something funky
+
+        //loop to draw the lines. the interval calculation gets kind of messy.. I didn't want to make any new vars
+        for (let i = 0; i < parabolaInt; i++) {
+            ctx.beginPath();
+            ctx.moveTo(this.x - ((this.x - next.x)*((i+1)/parabolaInt)), this.y - ((this.y - next.y)*((i+1)/parabolaInt)));
+            ctx.lineTo(this.x - ((this.x - prev.x)*((parabolaInt - i)/parabolaInt)), this.y - ((this.y - prev.y)*((parabolaInt - i)/parabolaInt)));
+
+            ctx.strokeStyle = "#FF0000";
+            ctx.lineWidth = 1;
+            ctx.stroke();
+        }
+        
 
     }
 
@@ -94,6 +101,7 @@ class Dot {
         for (let i = 0; i < dotArray.length; i++) {
             dotArray[i].drawDot();
             if(drawLinesToggle) dotArray[i].drawLines();
+            if(this.parabolaToggle === true) this.drawParabola();
         }
 
         //touch check - check each frame if he is touching the mouse.
