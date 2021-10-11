@@ -7,7 +7,7 @@ const ctx = canvas.getContext('2d');
     var dotArray = [];
     var dotSelected = -1;
     var drawLinesToggle = false;
-    var parabolaInt = 100;
+    var parabolaInt = 20;
 //globals
 //Style
     var baseDotColor = "#000000"; //black
@@ -155,3 +155,6 @@ document.addEventListener('keypress', function (listener) {
 //9-25 just got the parabolas working! The selection system is a bit messy rn. it doesn't stay selected very easily. I think smaller dots might be funner.
 // also what if every other line was a different color? or something. might be fun to play with color palletes.
 // get the reset button to work, sort of as a refresh? without refreshing the page? controls are the main thing you'd want to work on rn i think.
+
+/** coming back to look at it. I'm pretty sure if I just make it so it only "selects" when you hit the parabola button that should work well enough.
+ */
